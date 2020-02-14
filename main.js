@@ -10,13 +10,17 @@ const shortListHandler = () => {
   // only for testing
   if (debug) {
     let button = document.querySelector(".clear-storage");
+    if(button) {
     button.addEventListener("click", function() {
       localStorage.clear();
     });
+  }
     // check all the shortlist buttons for clicks
     const addRemoveShortlist = () => {
       // make an array with all the shortlist elements
       let elements = [];
+
+
       let shortlistItem = document.querySelectorAll(".item");
       shortlistItem.forEach(function(singleItem) {
         // push the items in the elements array
@@ -50,12 +54,13 @@ const shortListHandler = () => {
         }
         checkItemStatus();
         // onclick function to add/remove from localstorage
+        if(element) {
         element
           .querySelector('.add-shortlist__button')
           .addEventListener('click', function() {
-
             // get image, set url as id
             let itemImage, itemProperties, itemTitle;
+
             itemImage = element.querySelector('.item__image')
             .getAttribute('src');
             itemTitle = element.querySelector('.card-title')
@@ -64,6 +69,7 @@ const shortListHandler = () => {
                 title: itemTitle,
                 image: itemImage
             }
+
             var match = false;
             // retrieve item from locastorage
             // and make it workable with json parse
@@ -73,13 +79,15 @@ const shortListHandler = () => {
             // add to shortlist
             if(parsed.length === 0) {
               parsed.push(itemProperties);
-            }
+            } 
             else if(parsed.length !== 0) {
               for(var z=0;z<parsed.length;z++) {
                // if there's a match change the variable to true so the code doesn't execute
                if(parsed[z].image.indexOf(itemImage) > -1) {
                     // already present
                     match = true;
+                    // if it's already present then remove
+                    parsed.splice(z, 1);
                } 
               }
               // if there's no match in the loop add it to the localstorage
@@ -87,18 +95,17 @@ const shortListHandler = () => {
                   parsed.push(itemProperties);
                 }
               }
-
             localStorage.setItem('shortListItems', JSON.stringify(parsed));
+            // check if needs to add or remove
             checkItemStatus();
             // end add to shortlist
           });
+        }
       });
     };
     addRemoveShortlist();
   }
 };
-
-
 
 
 document.addEventListener("DOMContentLoaded", function() {

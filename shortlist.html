@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shortlist</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    
+
+    <div class="container">
+            <div class="row shortlist-output">
+                
+            </div>
+    </div>
+
+
+<script src="main.js"></script>
+</body>
+
+<script>
+      let shortlistOutput = document.querySelector('.shortlist-output');
+        let retrieved = localStorage.getItem('shortListItems');
+        let parsed = JSON.parse(retrieved);
+            //create item
+            for(var f=0;f<parsed.length;f++) {
+                let containerDiv, image;
+                containerDiv = document.createElement('div');
+                image = document.createElement('img');
+                image.classList.add('img-fluid');
+                containerDiv.classList.add('col-sm-12','col-md-4' , 'py-3');
+                image.src = parsed[f].image;
+                containerDiv.innerHTML = `<h2>${parsed[f].title}</h2>`;
+                console.log(parsed[f].image)
+                containerDiv.appendChild(image);
+                if(shortlistOutput) {
+                shortlistOutput.appendChild(containerDiv);
+                }
+            }
+
+</script>
+
+</html>
