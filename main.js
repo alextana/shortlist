@@ -32,23 +32,28 @@ const shortListHandler = () => {
         const checkItemStatus = () => {
             // retrieve item from locastorage
             // and make it workable with json parse
+            var elementText = element.querySelector('.add-shortlist__button');
+            var removeShortlist = 'Remove from Shortlist';
+            var addShortlist = 'Add to Shortlist';
+                elementText.innerText = addShortlist;
             let retrieved = localStorage.getItem('shortListItems');
             let parsed = JSON.parse(retrieved);
+
             for(var i=0;i<parsed.length;i++) {
               let itemImage = element.querySelector('.item__image')
               .getAttribute('src');
+              // check if current entry is already in localstorage
               if(parsed[i].image.indexOf(itemImage) > -1) {
-                element.querySelector('.add-shortlist__button').textContent = 'Remove from Shortlist';
-              } else {
-                element.querySelector('.add-shortlist__button').textContent = 'Add to Shortlist';
+                elementText.innerText = removeShortlist;
               }
             }
         }
         checkItemStatus();
         // onclick function to add/remove from localstorage
         element
-          .querySelector(".add-shortlist__button")
-          .addEventListener("click", function() {
+          .querySelector('.add-shortlist__button')
+          .addEventListener('click', function() {
+
             // get image, set url as id
             let itemImage, itemProperties, itemTitle;
             itemImage = element.querySelector('.item__image')
@@ -81,10 +86,10 @@ const shortListHandler = () => {
                 if(match === false) {
                   parsed.push(itemProperties);
                 }
-                checkItemStatus();
-            
-              } 
+              }
+
             localStorage.setItem('shortListItems', JSON.stringify(parsed));
+            checkItemStatus();
             // end add to shortlist
           });
       });
@@ -99,11 +104,3 @@ const shortListHandler = () => {
 document.addEventListener("DOMContentLoaded", function() {
   shortListHandler();
 });
-
-// set shortlistitems as a variable, empty array
-
-// have a shortlist handler that checks which item has been clicked
-
-// if clicked generate an object to send to local storage, but it needs to add it to the existing
-
-// change the text to remove from shortlist and remove from shortlist
