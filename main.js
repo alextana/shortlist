@@ -6,6 +6,39 @@ const shortListHandler = () => {
     let shortListItems = [];
     localStorage.setItem("shortListItems", JSON.stringify(shortListItems));
   }
+
+
+  function displayShortlistItems() {
+    let shortlistContainer = document.querySelector('.shortlist-output__container');
+    let shortlistOutput = document.querySelector('.shortlist-output');
+    let retrieved = localStorage.getItem('shortListItems');
+    let parsed = JSON.parse(retrieved);
+    // erase old shortlist and refresh 
+    shortlistOutput.innerHTML = '';
+        //create items
+        if(shortlistOutput) {
+        for(var f=0;f<parsed.length;f++) {
+            let containerDiv, image;
+            containerDiv = document.createElement('div');
+            image = document.createElement('img');
+            image.classList.add('img-fluid');
+            containerDiv.classList.add('col-sm-12','col-md-4', 'shortlist__item' , 'py-3');
+            image.src = parsed[f].image;
+            containerDiv.innerHTML = `<h2>${parsed[f].title}</h2>`;
+            containerDiv.appendChild(image);
+            if(shortlistOutput) {
+            shortlistOutput.appendChild(containerDiv);
+            }
+          }
+          if(document.querySelectorAll('.shortlist__item').length > 0) {
+            shortlistContainer.classList.remove('no-height');
+          } else {
+            shortlistContainer.classList.add('no-height');
+          }
+          
+      }
+  }
+
   // button to clear localstorage
   // only for testing
   if (debug) {
@@ -19,8 +52,6 @@ const shortListHandler = () => {
     const addRemoveShortlist = () => {
       // make an array with all the shortlist elements
       let elements = [];
-
-
       let shortlistItem = document.querySelectorAll(".item");
       shortlistItem.forEach(function(singleItem) {
         // push the items in the elements array
@@ -58,9 +89,9 @@ const shortListHandler = () => {
         element
           .querySelector('.add-shortlist__button')
           .addEventListener('click', function() {
+            
             // get image, set url as id
             let itemImage, itemProperties, itemTitle;
-
             itemImage = element.querySelector('.item__image')
             .getAttribute('src');
             itemTitle = element.querySelector('.card-title')
@@ -69,7 +100,6 @@ const shortListHandler = () => {
                 title: itemTitle,
                 image: itemImage
             }
-
             var match = false;
             // retrieve item from locastorage
             // and make it workable with json parse
@@ -99,6 +129,7 @@ const shortListHandler = () => {
             // check if needs to add or remove
             checkItemStatus();
             // end add to shortlist
+            displayShortlistItems();
           });
         }
       });
@@ -106,8 +137,6 @@ const shortListHandler = () => {
     addRemoveShortlist();
   }
 };
-
-
 document.addEventListener("DOMContentLoaded", function() {
   shortListHandler();
 });

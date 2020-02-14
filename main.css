@@ -10,4 +10,35 @@
   max-height: 450px;
   border-radius: 0px;
 }
+
+.no-height {
+  max-height: 0px !important;
+}
+
+.shortlist-output__container {
+  -webkit-transition: .65s all ease-in-out;
+  transition: .65s all ease-in-out;
+  overflow: scroll;
+  max-height: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 150px;
+  display: block;
+  width: 100%;
+  background: white;
+  border-top: 2px solid #c0c0c0;
+}
+
+.shortlist-output__container .shortlist-output {
+  padding: 15px 15px;
+}
+
+.shortlist-output__container .shortlist-output img {
+  width: 50px;
+  height: 50px;
+}
+
+body {
+  padding-bottom: 300px;
+}
 /*# sourceMappingURL=main.css.map */
